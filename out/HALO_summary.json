@@ -1,0 +1,112 @@
+{
+  "config": {
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "fold_days": 30,
+    "min_train_days": 60,
+    "latency_deltas": [
+      0,
+      7,
+      30,
+      60,
+      120
+    ],
+    "headline_delta": 30,
+    "strict_delta": 120,
+    "uid_variant": "medium",
+    "fs_agreement_threshold": 0.55,
+    "fs_weights": {
+      "card2": 1.0,
+      "card3": 0.6,
+      "card5": 0.6,
+      "card6": 0.4,
+      "card4": 0.4,
+      "P_emaildomain": 1.2,
+      "dist1": 0.5,
+      "DeviceInfo": 1.4,
+      "id_30": 0.8,
+      "id_31": 0.8,
+      "id_33": 1.0
+    },
+    "risk_attributes": [
+      "card1",
+      "card2",
+      "addr1",
+      "P_emaildomain",
+      "R_emaildomain",
+      "DeviceInfo",
+      "id_31",
+      "id_33",
+      "ProductCD_card4",
+      "bin_proxy"
+    ],
+    "tau_days": 30.0,
+    "gamma_damping": 0.4,
+    "eb_min_count": 30,
+    "regime_min_support": 0.005,
+    "regime_max_count": 60,
+    "lgbm_params": {
+      "objective": "binary",
+      "n_estimators": 300,
+      "learning_rate": 0.04,
+      "num_leaves": 31,
+      "min_child_samples": 100,
+      "subsample": 0.8,
+      "subsample_freq": 1,
+      "colsample_bytree": 0.7,
+      "reg_lambda": 3.0,
+      "n_jobs": -1,
+      "verbose": -1
+    },
+    "fn_cost_ratio": 20.0,
+    "monotone_features_positive": [],
+    "review_budget_k": 0.01,
+    "smoke": false,
+    "smoke_rows": 50000,
+    "n_jobs": 7,
+    "config_hash": "11d0053911da"
+  },
+  "environment": {
+    "python": "3.14.3",
+    "platform": "Windows-11-10.0.22631-SP0",
+    "cpu_count": 8,
+    "captured_at": "2026-09-04 15:22:31",
+    "ram_total_gb": 8.42,
+    "ram_available_gb": 1.37,
+    "disk_free_gb": 94.96,
+    "v_numpy": "2.5.2",
+    "v_pandas": "3.0.5",
+    "v_sklearn": "1.9.0",
+    "v_scipy": "1.18.0",
+    "v_lightgbm": "4.7.0",
+    "v_xgboost": "3.4.1",
+    "v_catboost": "1.2.10",
+    "v_shap": "0.52.0",
+    "v_matplotlib": "3.11.1",
+    "parquet_available": false
+  },
+  "tables_present": [
+    "T1",
+    "T1b",
+    "T1b_attribution",
+    "T2",
+    "T3",
+    "T4",
+    "T5",
+    "T6",
+    "T6_monotone_verification",
+    "T6_roar",
+    "T7",
+    "F1",
+    "F3"
+  ],
+  "tables_missing": [
+    "L5",
+    "L5_evidence"
+  ]
+}

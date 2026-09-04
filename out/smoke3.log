@@ -1,0 +1,695 @@
+halo | config=11d0053911da | python=3.14.3 | cpu=8 | ram=8.42GB | work=D:\12th\dm\paper\out
+==============================================================================
+SMOKE TEST -- synthetic data, known ground truth
+==============================================================================
+
+--- entities --------------------------------------------------------------
+  [   0.17s] generate synthetic data
+  [   0.07s] base features
+  [   0.09s] Block A: entity resolution
+  [   0.00s] index events
+  rows=15,128  features=174  entities=3,000  fraud_rate=0.0465  index_events=173
+uid_variant  n_entities  entity_label_purity  propagated_positive_share  c_monotonicity_violation_rate  er_pair_f1  entity_size_median  left_truncated_entities
+      loose        2998             0.983322                   0.753912                       0.000171    0.999574                 5.0                      123
+     medium        3000             0.983333                   0.753912                       0.000000    1.000000                 5.0                      123
+     strict        3000             0.983333                   0.753912                       0.000000    1.000000                 5.0                      123
+
+GO/NO-GO: entity label purity = 0.9833
+  High purity means entity identity nearly determines the label, which is the
+  evidence L3 rests on. Low purity would mean the thesis needs rethinking.
+  Either way this is the number to report; do not tune anything to move it.
+
+--- ladder ----------------------------------------------------------------
+  (using cached prepared_synth_all)
+  [   0.14s] Block C: regime mining
+  [   1.23s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   1.31s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   1.24s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   1.30s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   1.24s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   1.55s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   1.27s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.28s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.85s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   1.19s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.22s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   1.17s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   1.08s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.95s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   1.08s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.14s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.26s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.76s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.90s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.98s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.09s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   1.22s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.66s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.77s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.94s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   1.09s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.23s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.68s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.80s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.95s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   1.07s] Block B: association risk
+  [   0.19s] Block C: regime mining
+  [   1.33s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.56s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.67s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.80s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.97s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   1.01s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.57s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.66s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.82s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.89s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.04s] Block B: association risk
+ rung                                          rung_label  base_rate_mean  base_rate_std  auprc_mean  auprc_std  auroc_mean  auroc_std  auprc_lift_mean  auprc_lift_std  index_auprc_mean  index_auprc_std  index_auprc_lift_mean  index_auprc_lift_std  cold_entity_auprc_mean  cold_entity_auprc_std  cold_entity_auprc_lift_mean  cold_entity_auprc_lift_std  dollar_recall_at_k_mean  dollar_recall_at_k_std
+rung0     All leaks open (random split + pre-split SMOTE)        0.046580       0.003905    0.839554   0.022942    0.950431   0.010281        18.112050        1.342314          0.096032         0.033339               7.809269              2.398236                0.564944               0.281404                     9.982327                    7.433229                 0.211942                0.032915
+rung1               Close L1 (resample inside folds only)        0.046580       0.003905    0.839418   0.021794    0.947583   0.011837        18.111326        1.368779          0.089990         0.030134               7.349505              2.287338                0.567315               0.283853                    10.003183                    7.609184                 0.205719                0.029643
+rung2 Close L2 (chronological split, past-only encodings)        0.045345       0.006104    0.578810   0.224179    0.822917   0.095004        12.945337        5.205481          0.064218         0.013901               5.932739              1.388315                0.066394               0.006735                     1.505033                    0.260183                 0.207358                0.101336
+rung3               Close L3 (entity-disjoint train/test)        0.045345       0.006104    0.078377   0.026499    0.635888   0.074224         1.744920        0.599847          0.059389         0.017681               5.362302              0.977656                0.078377               0.026499                     1.744920                    0.599847                 0.025407                0.023981
+rung4           Close L4 (only labels matured past delta)        0.045345       0.006104    0.104187   0.041772    0.682237   0.064778         2.325979        0.960858          0.018533         0.003705               1.711943              0.334900                0.104187               0.041772                     2.325979                    0.960858                 0.045121                0.061463
+
+--- main ------------------------------------------------------------------
+  (using cached prepared_synth_all)
+  [   0.07s] Block C: regime mining
+  [   0.57s] Block B: association risk
+  [   0.07s] Block C: regime mining
+  [   0.64s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.74s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.85s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   1.07s] Block B: association risk
+  [   0.06s] Block C: regime mining
+  [   0.51s] Block B: association risk
+  [   0.07s] Block C: regime mining
+  [   0.62s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.74s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.88s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   1.16s] Block B: association risk
+  [   0.06s] Block C: regime mining
+  [   0.54s] Block B: association risk
+  [   0.08s] Block C: regime mining
+  [   0.65s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.79s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.90s] Block B: association risk
+  [   0.21s] Block C: regime mining
+  [   1.17s] Block B: association risk
+  [   0.07s] Block C: regime mining
+  [   0.53s] Block B: association risk
+  [   0.07s] Block C: regime mining
+  [   0.62s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.77s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.89s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   1.05s] Block B: association risk
+  [   0.07s] Block C: regime mining
+  [   0.56s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.67s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.81s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   1.00s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.23s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.59s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.68s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.95s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.87s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.03s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.55s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.69s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.79s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.90s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.10s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.56s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.71s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.90s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.95s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.31s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.75s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.89s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.82s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.99s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.14s] Block B: association risk
+  [   0.08s] Block C: regime mining
+  [   0.70s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.70s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.80s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.96s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.14s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.56s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.68s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.88s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   1.06s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.07s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.62s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.70s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.86s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.94s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.10s] Block B: association risk
+   model  n_mean       n_std  base_rate_mean  base_rate_std  auprc_mean  auprc_std  auroc_mean  auroc_std  auprc_lift_mean  auprc_lift_std  brier_mean  brier_std  ece_mean  ece_std  index_auprc_mean  index_auprc_std  index_base_rate_mean  index_base_rate_std  index_auprc_lift_mean  index_auprc_lift_std  n_index_positives_mean  n_index_positives_std  n_masked_propagated_mean  n_masked_propagated_std  cold_entity_auprc_mean  cold_entity_auprc_std  cold_base_rate_mean  cold_base_rate_std  cold_entity_auprc_lift_mean  cold_entity_auprc_lift_std  n_cold_rows_mean  n_cold_rows_std  cold_positive_count_mean  cold_positive_count_std  cold_row_share_mean  cold_row_share_std  dollar_recall_at_k_mean  dollar_recall_at_k_std  count_recall_at_k_mean  count_recall_at_k_std  alert_precision_at_k_mean  alert_precision_at_k_std  k_mean  k_std  n_reviewed_mean  n_reviewed_std  ttd_n_entities_mean  ttd_n_entities_std  ttd_detected_share_mean  ttd_detected_share_std  ttd_median_txn_mean  ttd_median_txn_std  ttd_median_hours_mean  ttd_median_hours_std  ttd_early_share_mean  ttd_early_share_std  fold_id_mean  fold_id_std  test_day_start_mean  test_day_start_std  test_day_end_mean  test_day_end_std  n_train_mean  n_train_std  n_test_mean  n_test_std  train_base_rate_mean  train_base_rate_std  test_base_rate_mean  test_base_rate_std  dropped_entity_rows_mean  dropped_entity_rows_std  label_maturity_dropped_mean  label_maturity_dropped_std  tuning_budget_mean  tuning_budget_std  n_features_mean  n_features_std  seed_mean  seed_std  n_monotone_mean  n_monotone_std
+catboost  2258.0 1107.728206        0.045345       0.006104    0.074613   0.005978    0.633010   0.042600         1.674346        0.284545    0.043890   0.006175  0.027597 0.010049          0.019247         0.004473              0.010921             0.001626               1.825870              0.612721                    23.4              12.764534                      79.4                40.887923                0.074613               0.005978             0.045345            0.006104                     1.674346                    0.284545            2258.0      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.018405                0.026536                0.016849               0.016066                   0.076058                  0.073590    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.047008                0.031763             0.928571            1.484042             116.403254            218.072221              0.142857             0.377964           2.0     1.490712                120.0            44.72136              144.4         37.319045        6470.8  4051.358313       2258.0 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                       2700.8                  179.142898                 0.0                0.0            221.0             0.0        0.5  0.527046              NaN             NaN
+    halo  2258.0 1107.728206        0.045345       0.006104    0.122755   0.071634    0.685386   0.056966         2.743693        1.632234    0.045650   0.006227  0.046025 0.006389          0.023574         0.008404              0.010921             0.001626               2.207601              0.844571                    23.4              12.764534                      79.4                40.887923                0.122755               0.071634             0.045345            0.006104                     2.743693                    1.632234            2258.0      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.062252                0.082547                0.049619               0.051251                   0.196958                  0.173120    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.057148                0.032606             1.571429            1.017700             145.086409            119.852644              0.000000             0.000000           2.0     1.490712                120.0            44.72136              144.4         37.319045        6470.8  4051.358313       2258.0 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                       2700.8                  179.142898                 NaN                NaN            221.0             0.0        0.5  0.527046             19.0             0.0
+lightgbm  2258.0 1107.728206        0.045345       0.006104    0.104187   0.041772    0.682237   0.064778         2.325979        0.960858    0.043519   0.005882  0.029282 0.005024          0.018533         0.003705              0.010921             0.001626               1.711943              0.334900                    23.4              12.764534                      79.4                40.887923                0.104187               0.041772             0.045345            0.006104                     2.325979                    0.960858            2258.0      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.045121                0.061463                0.040295               0.039040                   0.168519                  0.136431    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.079694                0.046249             1.562500            1.015505             131.877066            122.104879              0.000000             0.000000           2.0     1.490712                120.0            44.72136              144.4         37.319045        6470.8  4051.358313       2258.0 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                       2700.8                  179.142898                 0.0                0.0            221.0             0.0        0.5  0.527046              NaN             NaN
+  logreg  2258.0 1107.728206        0.045345       0.006104    0.117069   0.042556    0.634437   0.075156         2.600031        0.946366    0.113002   0.018383  0.164258 0.041428          0.031469         0.017454              0.010921             0.001626               2.860014              1.543442                    23.4              12.764534                      79.4                40.887923                0.117069               0.042556             0.045345            0.006104                     2.600031                    0.946366            2258.0      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.061415                0.082024                0.054486               0.049140                   0.222751                  0.170353    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.118401                0.064315             0.625000            0.443203              36.379132             36.505804              0.145833             0.159052           2.0     1.490712                120.0            44.72136              144.4         37.319045        6470.8  4051.358313       2258.0 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                       2700.8                  179.142898                 0.0                0.0            221.0             0.0        0.5  0.527046              NaN             NaN
+     mlp  2258.0 1107.728206        0.045345       0.006104    0.115706   0.075312    0.582016   0.095590         2.618368        1.730088    0.043207   0.006670  0.029728 0.014078          0.025646         0.013628              0.010921             0.001626               2.369745              1.189053                    23.4              12.764534                      79.4                40.887923                0.115706               0.075312             0.045345            0.006104                     2.618368                    1.730088            2258.0      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.064307                0.081618                0.053622               0.048440                   0.211376                  0.159583    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.092461                0.026496             1.125000            0.876275             110.410295            103.131616              0.041667             0.117851           2.0     1.490712                120.0            44.72136              144.4         37.319045        6470.8  4051.358313       2258.0 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                       2700.8                  179.142898                 0.0                0.0            221.0             0.0        0.5  0.527046              NaN             NaN
+ xgboost  2258.0 1107.728206        0.045345       0.006104    0.090198   0.016032    0.667465   0.038188         2.003705        0.349396    0.044592   0.005999  0.040136 0.005999          0.020005         0.005892              0.010921             0.001626               1.848853              0.537543                    23.4              12.764534                      79.4                40.887923                0.090198               0.016032             0.045345            0.006104                     2.003705                    0.349396            2258.0      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.028888                0.029755                0.024777               0.021308                   0.114683                  0.100498    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.099130                0.067654             1.142857            0.852168             150.898333            127.682479              0.035714             0.094491           2.0     1.490712                120.0            44.72136              144.4         37.319045        6470.8  4051.358313       2258.0 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                       2700.8                  179.142898                 0.0                0.0            221.0             0.0        0.5  0.527046              NaN             NaN
+
+--- ablation --------------------------------------------------------------
+  (using cached prepared_synth_all)
+  [   0.07s] Block C: regime mining
+  [   0.58s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.73s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.79s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.99s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.17s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.56s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.68s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.83s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   1.09s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.04s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.10s] Block C: regime mining
+  [   0.12s] Block C: regime mining
+  [   0.14s] Block C: regime mining
+  [   0.16s] Block C: regime mining
+  [   0.10s] Block C: regime mining
+  [   0.09s] Block C: regime mining
+  [   0.12s] Block C: regime mining
+  [   0.16s] Block C: regime mining
+  [   0.17s] Block C: regime mining
+  [   0.76s] Block B: association risk
+  [   0.72s] Block B: association risk
+  [   0.88s] Block B: association risk
+  [   1.03s] Block B: association risk
+  [   1.11s] Block B: association risk
+  [   0.66s] Block B: association risk
+  [   0.75s] Block B: association risk
+  [   0.82s] Block B: association risk
+  [   1.01s] Block B: association risk
+  [   1.25s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.59s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.69s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.81s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.94s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.28s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.59s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.68s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.83s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   0.98s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   1.20s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.61s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.69s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.79s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   0.95s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.17s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.58s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.72s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.86s] Block B: association risk
+  [   0.19s] Block C: regime mining
+  [   1.14s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.07s] Block B: association risk
+        ablation  n_mean       n_std  base_rate_mean  base_rate_std  auprc_mean  auprc_std  auroc_mean  auroc_std  auprc_lift_mean  auprc_lift_std  brier_mean  brier_std  ece_mean  ece_std  index_auprc_mean  index_auprc_std  index_base_rate_mean  index_base_rate_std  index_auprc_lift_mean  index_auprc_lift_std  n_index_positives_mean  n_index_positives_std  n_masked_propagated_mean  n_masked_propagated_std  cold_entity_auprc_mean  cold_entity_auprc_std  cold_base_rate_mean  cold_base_rate_std  cold_entity_auprc_lift_mean  cold_entity_auprc_lift_std  n_cold_rows_mean  n_cold_rows_std  cold_positive_count_mean  cold_positive_count_std  cold_row_share_mean  cold_row_share_std  dollar_recall_at_k_mean  dollar_recall_at_k_std  count_recall_at_k_mean  count_recall_at_k_std  alert_precision_at_k_mean  alert_precision_at_k_std  k_mean  k_std  n_reviewed_mean  n_reviewed_std  ttd_n_entities_mean  ttd_n_entities_std  ttd_detected_share_mean  ttd_detected_share_std  ttd_median_txn_mean  ttd_median_txn_std  ttd_median_hours_mean  ttd_median_hours_std  ttd_early_share_mean  ttd_early_share_std  fold_id_mean  fold_id_std  test_day_start_mean  test_day_start_std  test_day_end_mean  test_day_end_std  n_train_mean  n_train_std  n_test_mean  n_test_std  train_base_rate_mean  train_base_rate_std  test_base_rate_mean  test_base_rate_std  dropped_entity_rows_mean  dropped_entity_rows_std  label_maturity_dropped_mean  label_maturity_dropped_std  n_monotone_mean  n_monotone_std  n_features_mean  n_features_std  seed_mean  seed_std
+  behaviour_only  2258.0 1107.728206        0.045345       0.006104    0.115766   0.060148    0.687221   0.076617         2.589517        1.377548    0.045777   0.006440  0.046094 0.006641          0.021139         0.004543              0.010921             0.001626               1.967713              0.481139                    23.4              12.764534                      79.4                40.887923                0.115766               0.060148             0.045345            0.006104                     2.589517                    1.377548            2258.0      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.073265                0.078123                0.056328               0.046703                   0.225794                  0.151898    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.100585                0.032873             1.187500            0.458063             112.899826            104.822586              0.000000             0.000000           2.0     1.490712                120.0            44.72136              144.4         37.319045        6470.8  4051.358313       2258.0 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                       2700.8                  179.142898              0.0             0.0            169.0             0.0        0.5  0.527046
+            full  2258.0 1107.728206        0.045345       0.006104    0.122755   0.071634    0.685386   0.056966         2.743693        1.632234    0.045650   0.006227  0.046025 0.006389          0.023574         0.008404              0.010921             0.001626               2.207601              0.844571                    23.4              12.764534                      79.4                40.887923                0.122755               0.071634             0.045345            0.006104                     2.743693                    1.632234            2258.0      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.062252                0.082547                0.049619               0.051251                   0.196958                  0.173120    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.057148                0.032606             1.571429            1.017700             145.086409            119.852644              0.000000             0.000000           2.0     1.490712                120.0            44.72136              144.4         37.319045        6470.8  4051.358313       2258.0 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                       2700.8                  179.142898             19.0             0.0            221.0             0.0        0.5  0.527046
+no_entity_memory  2258.0 1107.728206        0.045345       0.006104    0.122405   0.067511    0.690899   0.065688         2.730551        1.534143    0.045108   0.006505  0.045737 0.006625          0.025562         0.014525              0.010921             0.001626               2.385847              1.368698                    23.4              12.764534                      79.4                40.887923                0.122405               0.067511             0.045345            0.006104                     2.730551                    1.534143            2258.0      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.068524                0.079431                0.055174               0.048113                   0.221958                  0.160765    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.088990                0.051138             0.928571            0.534522              65.488254             81.463390              0.000000             0.000000           2.0     1.490712                120.0            44.72136              144.4         37.319045        6470.8  4051.358313       2258.0 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                       2700.8                  179.142898             15.0             0.0            221.0             0.0        0.5  0.527046
+    no_monotoneD  2258.0 1107.728206        0.045345       0.006104    0.128360   0.073331    0.695765   0.069882         2.882350        1.685563    0.045515   0.006272  0.045881 0.006598          0.028592         0.017227              0.010921             0.001626               2.690241              1.705284                    23.4              12.764534                      79.4                40.887923                0.128360               0.073331             0.045345            0.006104                     2.882350                    1.685563            2258.0      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.067074                0.080309                0.053823               0.049626                   0.214815                  0.167016    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.075206                0.048742             1.285714            0.859125             106.315556            100.899160              0.000000             0.000000           2.0     1.490712                120.0            44.72136              144.4         37.319045        6470.8  4051.358313       2258.0 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                       2700.8                  179.142898              0.0             0.0            221.0             0.0        0.5  0.527046
+     no_regimesC  2258.0 1107.728206        0.045345       0.006104    0.131811   0.091618    0.688762   0.073039         2.951293        2.085232    0.045598   0.006297  0.045830 0.006475          0.022709         0.006057              0.010921             0.001626               2.114239              0.613238                    23.4              12.764534                      79.4                40.887923                0.131811               0.091618             0.045345            0.006104                     2.951293                    2.085232            2258.0      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.062857                0.081494                0.052275               0.049715                   0.207672                  0.166936    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.066585                0.041646             1.214286            0.859125             106.449444            101.583970              0.071429             0.188982           2.0     1.490712                120.0            44.72136              144.4         37.319045        6470.8  4051.358313       2258.0 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                       2700.8                  179.142898             19.0             0.0            200.0             0.0        0.5  0.527046
+        no_riskB  2258.0 1107.728206        0.045345       0.006104    0.106638   0.034888    0.683907   0.056890         2.373517        0.796245    0.045501   0.006159  0.045825 0.006342          0.023719         0.008335              0.010921             0.001626               2.221180              0.885365                    23.4              12.764534                      79.4                40.887923                0.106638               0.034888             0.045345            0.006104                     2.373517                    0.796245            2258.0      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.068259                0.078891                0.055932               0.047787                   0.225661                  0.160049    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.092447                0.067142             1.357143            0.852168             106.002639            103.182736              0.000000             0.000000           2.0     1.490712                120.0            44.72136              144.4         37.319045        6470.8  4051.358313       2258.0 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                       2700.8                  179.142898              0.0             0.0            190.0             0.0        0.5  0.527046
+
+--- latency ---------------------------------------------------------------
+  (using cached prepared_synth_all)
+  [   0.09s] Block C: regime mining
+  [   0.73s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.83s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.91s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   1.12s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.34s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.70s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.78s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.97s] Block B: association risk
+  [   0.19s] Block C: regime mining
+  [   1.04s] Block B: association risk
+  [   0.19s] Block C: regime mining
+  [   1.37s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.69s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.86s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.94s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.04s] Block B: association risk
+  [   0.21s] Block C: regime mining
+  [   1.33s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.64s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.80s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   1.01s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   1.05s] Block B: association risk
+  [   0.20s] Block C: regime mining
+  [   1.33s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.71s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.87s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   0.93s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.09s] Block B: association risk
+  [   0.19s] Block C: regime mining
+  [   1.34s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.68s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.76s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.93s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   1.16s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.20s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.67s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.83s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.90s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.06s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.30s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.66s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.81s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.97s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.08s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.26s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.57s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.79s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.83s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   0.95s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.16s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.61s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.64s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.79s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   0.96s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.21s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.58s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.67s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.79s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.96s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.21s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.56s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.67s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.83s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.93s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.21s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.59s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.63s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.78s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   0.90s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.59s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.64s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.91s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   0.90s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.58s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.66s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.86s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   0.94s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.56s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.68s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.78s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   1.00s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.52s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.58s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.51s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.61s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.52s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.63s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.55s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.57s] Block B: association risk
+ delta_days    model  n_mean       n_std  base_rate_mean  base_rate_std  auprc_mean  auprc_std  auroc_mean  auroc_std  auprc_lift_mean  auprc_lift_std  brier_mean  brier_std  ece_mean  ece_std  index_auprc_mean  index_auprc_std  index_base_rate_mean  index_base_rate_std  index_auprc_lift_mean  index_auprc_lift_std  n_index_positives_mean  n_index_positives_std  n_masked_propagated_mean  n_masked_propagated_std  cold_entity_auprc_mean  cold_entity_auprc_std  cold_base_rate_mean  cold_base_rate_std  cold_entity_auprc_lift_mean  cold_entity_auprc_lift_std  n_cold_rows_mean  n_cold_rows_std  cold_positive_count_mean  cold_positive_count_std  cold_row_share_mean  cold_row_share_std  dollar_recall_at_k_mean  dollar_recall_at_k_std  count_recall_at_k_mean  count_recall_at_k_std  alert_precision_at_k_mean  alert_precision_at_k_std  k_mean  k_std  n_reviewed_mean  n_reviewed_std  ttd_n_entities_mean  ttd_n_entities_std  ttd_detected_share_mean  ttd_detected_share_std  ttd_median_txn_mean  ttd_median_txn_std  ttd_median_hours_mean  ttd_median_hours_std  ttd_early_share_mean  ttd_early_share_std  fold_id_mean  fold_id_std  test_day_start_mean  test_day_start_std  test_day_end_mean  test_day_end_std  n_train_mean  n_train_std  n_test_mean  n_test_std  train_base_rate_mean  train_base_rate_std  test_base_rate_mean  test_base_rate_std  dropped_entity_rows_mean  dropped_entity_rows_std  label_maturity_dropped_mean  label_maturity_dropped_std  tuning_budget_mean  tuning_budget_std  n_features_mean  n_features_std  seed_mean  seed_std  n_monotone_mean  n_monotone_std
+          0     halo 2258.00 1107.728206        0.045345       0.006104    0.071944   0.017195    0.627233   0.068231         1.597433        0.378424    0.045394   0.006009  0.045548 0.006009          0.050949         0.015774              0.010921             0.001626               4.642603              1.197245                    23.4              12.764534                      79.4                40.887923                0.071944               0.017195             0.045345            0.006104                     1.597433                    0.378424           2258.00      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.022963                0.021729                0.016453               0.013022                   0.075926                  0.062645    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.084579                0.047983             0.000000            0.000000               0.000000              0.000000              0.071429             0.121988           2.0     1.490712                120.0           44.721360              144.4         37.319045        8136.2  4452.426824      2258.00 1107.728206              0.051589             0.005175             0.045345            0.006104                    1230.4               412.146468                         0.00                    0.000000                 NaN                NaN            221.0             0.0        0.5  0.527046             19.0             0.0
+          0 lightgbm 2258.00 1107.728206        0.045345       0.006104    0.078377   0.026499    0.635888   0.074224         1.744920        0.599847    0.044930   0.005971  0.041861 0.005706          0.059389         0.017681              0.010921             0.001626               5.362302              0.977656                    23.4              12.764534                      79.4                40.887923                0.078377               0.026499             0.045345            0.006104                     1.744920                    0.599847           2258.00      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.025407                0.023981                0.018154               0.012908                   0.082937                  0.061204    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.098327                0.047011             0.000000            0.000000               0.000000              0.000000              0.056250             0.105009           2.0     1.490712                120.0           44.721360              144.4         37.319045        8136.2  4452.426824      2258.00 1107.728206              0.051589             0.005175             0.045345            0.006104                    1230.4               412.146468                         0.00                    0.000000                 0.0                0.0            221.0             0.0        0.5  0.527046              NaN             NaN
+          7     halo 2258.00 1107.728206        0.045345       0.006104    0.119961   0.086869    0.656763   0.092288         2.686879        1.975719    0.045532   0.006174  0.045973 0.006333          0.040715         0.012288              0.010921             0.001626               3.851896              1.323175                    23.4              12.764534                      79.4                40.887923                0.119961               0.086869             0.045345            0.006104                     2.686879                    1.975719           2258.00      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.066176                0.080095                0.057803               0.045678                   0.229894                  0.144543    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.118160                0.029361             0.250000            0.462910               3.568611              6.607784              0.041667             0.117851           2.0     1.490712                120.0           44.721360              144.4         37.319045        7890.2  4336.177190      2258.00 1107.728206              0.051687             0.005425             0.045345            0.006104                     837.2               285.764783                       639.20                   55.643308                 NaN                NaN            221.0             0.0        0.5  0.527046             19.0             0.0
+          7 lightgbm 2258.00 1107.728206        0.045345       0.006104    0.122531   0.078072    0.680633   0.098403         2.752225        1.785837    0.043901   0.006034  0.034316 0.007429          0.034401         0.013911              0.010921             0.001626               3.253930              1.390383                    23.4              12.764534                      79.4                40.887923                0.122531               0.078072             0.045345            0.006104                     2.752225                    1.785837           2258.00      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.063068                0.080947                0.054518               0.046835                   0.219180                  0.151588    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.079950                0.031437             0.812500            0.883883              55.123056             66.231486              0.000000             0.000000           2.0     1.490712                120.0           44.721360              144.4         37.319045        7890.2  4336.177190      2258.00 1107.728206              0.051687             0.005425             0.045345            0.006104                     837.2               285.764783                       639.20                   55.643308                 0.0                0.0            221.0             0.0        0.5  0.527046              NaN             NaN
+         30     halo 2258.00 1107.728206        0.045345       0.006104    0.122755   0.071634    0.685386   0.056966         2.743693        1.632234    0.045650   0.006227  0.046025 0.006389          0.023574         0.008404              0.010921             0.001626               2.207601              0.844571                    23.4              12.764534                      79.4                40.887923                0.122755               0.071634             0.045345            0.006104                     2.743693                    1.632234           2258.00      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.062252                0.082547                0.049619               0.051251                   0.196958                  0.173120    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.057148                0.032606             1.571429            1.017700             145.086409            119.852644              0.000000             0.000000           2.0     1.490712                120.0           44.721360              144.4         37.319045        6470.8  4051.358313      2258.00 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                      2700.80                  179.142898                 NaN                NaN            221.0             0.0        0.5  0.527046             19.0             0.0
+         30 lightgbm 2258.00 1107.728206        0.045345       0.006104    0.104187   0.041772    0.682237   0.064778         2.325979        0.960858    0.043519   0.005882  0.029282 0.005024          0.018533         0.003705              0.010921             0.001626               1.711943              0.334900                    23.4              12.764534                      79.4                40.887923                0.104187               0.041772             0.045345            0.006104                     2.325979                    0.960858           2258.00      1107.728206                     102.8                52.946094                  1.0                 0.0                 0.045121                0.061463                0.040295               0.039040                   0.168519                  0.136431    0.01    0.0             22.6       10.864826                 23.4           12.764534                 0.079694                0.046249             1.562500            1.015505             131.877066            122.104879              0.000000             0.000000           2.0     1.490712                120.0           44.721360              144.4         37.319045        6470.8  4051.358313      2258.00 1107.728206              0.052276             0.005445             0.045345            0.006104                     195.0                69.394204                      2700.80                  179.142898                 0.0                0.0            221.0             0.0        0.5  0.527046              NaN             NaN
+         60     halo 2144.75 1226.524329        0.044509       0.006626    0.110216   0.058526    0.679502   0.076487         2.517022        1.333061    0.044587   0.007666  0.045316 0.008152          0.017076         0.002285              0.010098             0.000672               1.695376              0.223402                    20.5              12.705454                      75.0                45.153706                0.110216               0.058526             0.044509            0.006626                     2.517022                    1.333061           2144.75      1226.524329                      95.5                57.443140                  1.0                 0.0                 0.042764                0.070854                0.035154               0.045730                   0.133929                  0.157131    0.01    0.0             21.5       12.035661                 20.5           12.705454                 0.061827                0.039883             0.500000            0.836660              61.603426            140.567506              0.166667             0.408248           1.5     1.195229                135.0           35.856858              158.0         27.087161        5273.5  3151.424213      2144.75 1226.524329              0.051223             0.003313             0.044509            0.006626                      19.5                12.247449                      5455.75                  239.572685                 NaN                NaN            221.0             0.0        0.5  0.534522             19.0             0.0
+         60 lightgbm 2144.75 1226.524329        0.044509       0.006626    0.107157   0.058421    0.674597   0.056962         2.445922        1.334500    0.042557   0.006435  0.027680 0.003076          0.018682         0.001763              0.010098             0.000672               1.855865              0.199236                    20.5              12.705454                      75.0                45.153706                0.107157               0.058421             0.044509            0.006626                     2.445922                    1.334500           2144.75      1226.524329                      95.5                57.443140                  1.0                 0.0                 0.042288                0.071130                0.040615               0.044479                   0.160714                  0.150316    0.01    0.0             21.5       12.035661                 20.5           12.705454                 0.055654                0.022303             1.000000            0.948683              56.044792             92.018466              0.000000             0.000000           1.5     1.195229                135.0           35.856858              158.0         27.087161        5273.5  3151.424213      2144.75 1226.524329              0.051223             0.003313             0.044509            0.006626                      19.5                12.247449                      5455.75                  239.572685                 0.0                0.0            221.0             0.0        0.5  0.534522              NaN             NaN
+        120     halo 1485.50 1532.864965        0.040104       0.004849    0.072713   0.011510    0.613223   0.071743         1.813908        0.177002    0.041884   0.004264  0.043268 0.004547          0.010569         0.000163              0.009496             0.000000               1.112998              0.017148                    13.0              15.011107                      41.0                39.259818                0.072713               0.011510             0.040104            0.004849                     1.813908                    0.177002           1485.50      1532.864965                      54.0                54.270925                  1.0                 0.0                 0.007642                0.013722                0.007426               0.009479                   0.026786                  0.034194    0.01    0.0             15.0       15.011107                 13.0           15.011107                 0.038462                0.000000            -1.000000            0.000000            -104.085833              0.000000              1.000000             0.000000           0.5     0.577350                165.0           17.320508              181.0          1.154701        2652.0  1369.474839      1485.50 1532.864965              0.052248             0.003469             0.040104            0.004849                       0.0                 0.000000                     10911.50                  254.611469                 NaN                NaN            221.0             0.0        0.5  0.577350             19.0             0.0
+        120 lightgbm 1485.50 1532.864965        0.040104       0.004849    0.071276   0.015257    0.628625   0.052280         1.772430        0.251232    0.039422   0.004530  0.023735 0.006541          0.010289         0.000228              0.009496             0.000000               1.083545              0.023993                    13.0              15.011107                      41.0                39.259818                0.071276               0.015257             0.040104            0.004849                     1.772430                    0.251232           1485.50      1532.864965                      54.0                54.270925                  1.0                 0.0                 0.004360                0.008719                0.004950               0.009901                   0.017857                  0.035714    0.01    0.0             15.0       15.011107                 13.0           15.011107                 0.038462                0.000000            -1.000000            0.000000            -104.085833              0.000000              1.000000             0.000000           0.5     0.577350                165.0           17.320508              181.0          1.154701        2652.0  1369.474839      1485.50 1532.864965              0.052248             0.003469             0.040104            0.004849                       0.0                 0.000000                     10911.50                  254.611469                 0.0                0.0            221.0             0.0        0.5  0.577350              NaN             NaN
+
+--- cost ------------------------------------------------------------------
+  (using cached prepared_synth_all)
+  [   0.07s] Block C: regime mining
+  [   0.55s] Block B: association risk
+  [   0.06s] Block C: regime mining
+  [   0.53s] Block B: association risk
+  [   0.06s] Block C: regime mining
+  [   0.55s] Block B: association risk
+  [   0.07s] Block C: regime mining
+  [   0.53s] Block B: association risk
+  [   0.08s] Block C: regime mining
+  [   0.58s] Block B: association risk
+  [   0.07s] Block C: regime mining
+  [   0.56s] Block B: association risk
+   model  dollar_recall_at_k  alert_precision_at_k  count_recall_at_k    auprc  fit_score_seconds  microseconds_per_txn
+  logreg            0.027425              0.185185           0.037879 0.090800               0.87                 220.9
+     mlp            0.006661              0.074074           0.015152 0.047422               1.11                 280.6
+lightgbm            0.021983              0.074074           0.015152 0.076531               1.30                 328.2
+ xgboost            0.014583              0.074074           0.015152 0.082802               7.50                1894.6
+catboost            0.018287              0.111111           0.022727 0.067114              16.80                4241.5
+    halo            0.014583              0.074074           0.015152 0.076303               2.14                 539.8
+
+--- size-control ----------------------------------------------------------
+  (using cached prepared_synth_all)
+  [   0.09s] Block C: regime mining
+  [   0.75s] Block B: association risk
+  [   0.08s] Block C: regime mining
+  [   0.76s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.62s] Block B: association risk
+  [   0.12s] Block C: regime mining
+  [   0.91s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.84s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.80s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   1.15s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   1.00s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.93s] Block B: association risk
+  [   0.18s] Block C: regime mining
+  [   1.21s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.13s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   1.03s] Block B: association risk
+  [   0.20s] Block C: regime mining
+  [   1.38s] Block B: association risk
+  [   0.21s] Block C: regime mining
+  [   1.33s] Block B: association risk
+  [   0.23s] Block C: regime mining
+  [   1.37s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.78s] Block B: association risk
+  [   0.08s] Block C: regime mining
+  [   0.67s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.67s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.88s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.85s] Block B: association risk
+  [   0.10s] Block C: regime mining
+  [   0.91s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.05s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.97s] Block B: association risk
+  [   0.13s] Block C: regime mining
+  [   0.96s] Block B: association risk
+  [   0.20s] Block C: regime mining
+  [   1.21s] Block B: association risk
+  [   0.16s] Block C: regime mining
+  [   1.13s] Block B: association risk
+  [   0.15s] Block C: regime mining
+  [   1.12s] Block B: association risk
+  [   0.19s] Block C: regime mining
+  [   1.34s] Block B: association risk
+  [   0.23s] Block C: regime mining
+  [   1.35s] Block B: association risk
+  [   0.23s] Block C: regime mining
+  [   1.26s] Block B: association risk
+            condition  base_rate_mean  base_rate_std  auprc_mean  auprc_std  auprc_lift_mean  auprc_lift_std  n_train_mean  n_train_std
+           rung2_full        0.045345       0.006104    0.578810   0.224179        12.945337        5.205481        9366.6  4155.076606
+   rung2_size_matched        0.045345       0.006104    0.517893   0.296604        11.747197        6.863277        8136.2  4452.426824
+rung3_entity_disjoint        0.045345       0.006104    0.078377   0.026499         1.744920        0.599847        8136.2  4452.426824
+
+Decomposition of the entity-disjointness drop:
+                                       0
+total_drop_auprc                0.500433
+attributable_to_training_size   0.060918
+attributable_to_entity_leakage  0.439516
+leakage_share_of_drop           0.878270
+
+  A high leakage_share means the collapse really is entity leakage.
+  A low one means much of it was simply training on less data, and the
+  paper must say so. Report whichever you get.
+
+--- drift -----------------------------------------------------------------
+  (using cached prepared_synth_all)
+  [   0.07s] Block C: regime mining
+  [   0.56s] Block B: association risk
+  [   0.09s] Block C: regime mining
+  [   0.74s] Block B: association risk
+  [   0.11s] Block C: regime mining
+  [   0.94s] Block B: association risk
+  [   0.14s] Block C: regime mining
+  [   0.95s] Block B: association risk
+  [   0.19s] Block C: regime mining
+  [   1.13s] Block B: association risk
+ window  day_start   n  js_divergence  top_regime  nearest_fold_day  day_start_fold    auprc  auprc_lift  base_rate
+      0          0 203            0.0           0                60              60 0.076531    1.571789   0.048691
+      1          7 295            0.0           0                60              60 0.076531    1.571789   0.048691
+      2         14 403            0.0           0                60              60 0.076531    1.571789   0.048691
+      3         21 428            0.0           0                60              60 0.076531    1.571789   0.048691
+      4         28 500            0.0           0                60              60 0.076531    1.571789   0.048691
+      5         35 495            0.0           0                60              60 0.076531    1.571789   0.048691
+      6         42 587            0.0           0                60              60 0.076531    1.571789   0.048691
+      7         49 593            0.0           0                60              60 0.076531    1.571789   0.048691
+      8         56 606            0.0           0                60              60 0.076531    1.571789   0.048691
+      9         63 661            0.0           0                60              60 0.076531    1.571789   0.048691
+     10         70 632            0.0           0                60              60 0.076531    1.571789   0.048691
+     11         77 615            0.0           0                90              90 0.092533    1.731865   0.053430
+     12         84 618            0.0           0                90              90 0.092533    1.731865   0.053430
+     13         91 640            0.0           0                90              90 0.092533    1.731865   0.053430
+     14         98 620            0.0           0                90              90 0.092533    1.731865   0.053430
+     15        105 640            0.0           0                90              90 0.092533    1.731865   0.053430
+     16        112 672            0.0           0               120             120 0.098095    2.209481   0.044397
+     17        119 652            0.0           0               120             120 0.098095    2.209481   0.044397
+     18        126 647            0.0           0               120             120 0.098095    2.209481   0.044397
+     19        133 666            0.0           0               120             120 0.098095    2.209481   0.044397
+
+--- shap ------------------------------------------------------------------
+  (using cached prepared_synth_all)
+  [   0.19s] Block C: regime mining
+  [   1.33s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   0.80s] Block B: association risk
+          family      CEP    leaky  migration
+   entity_memory 0.000000 0.133538  -0.133538
+       D_columns 0.029467 0.094785  -0.065318
+     missingness 0.004792 0.019930  -0.015139
+       M_columns 0.016194 0.021380  -0.005186
+        velocity 0.005913 0.010926  -0.005013
+      id_columns 0.007145 0.004103   0.003041
+       C_columns 0.044781 0.027216   0.017565
+       behaviour 0.093951 0.074051   0.019900
+association_risk 0.093401 0.064466   0.028935
+  identity_proxy 0.120091 0.045813   0.074278
+       V_columns 0.584265 0.503791   0.080474
+
+--- faithfulness ----------------------------------------------------------
+  (using cached prepared_synth_all)
+  [   0.11s] Block C: regime mining
+  [   0.89s] Block B: association risk
+  [   0.17s] Block C: regime mining
+  [   0.83s] Block B: association risk
+  [  28.77s] T6: ROAR curve
+                                            0
+auprc_monotone                       0.106230
+auprc_unconstrained                  0.115519
+monotonicity_price_auprc             0.009289
+monotonicity_price_relative          0.080415
+n_monotone_features                 19.000000
+monotone_raw_violations              2.000000
+monotone_max_violation               0.000160
+monotone_features_within_tolerance  18.000000
+monotone_features_checked           18.000000
+reason_code_coverage                 0.448276
+n_alerts_examined                   29.000000
+n_alerts_covered                    13.000000
+median_relative_change               0.065654
+
+==============================================================================
+PASSED : entities, ladder, main, ablation, latency, cost, size-control, drift, shap, faithfulness
+==============================================================================
+EXIT=0
