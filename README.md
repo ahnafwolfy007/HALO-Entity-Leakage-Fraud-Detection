@@ -4,7 +4,7 @@ Research pipeline for *"Guilt by Association: Entity Leakage and Latency-Honest
 Evaluation in Transaction Fraud Detection."*
 
 **Team Transparent** · CSE 4891 Data Mining (E)
-Md. Wali Ullah Khan · Ahnaf Atique · Abir Reza · Abir Hossain · Nadia Akter Labonno
+Ahnaf Atique · Md. Wali Ullah Khan · Abir Reza · Abir Hossain · Nadia Akter Labonno
 
 ---
 
