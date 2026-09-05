@@ -1,0 +1,117 @@
+# ==============================================================================
+# Byte-compiled / optimized / DLL files
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ==============================================================================
+# Virtual Environments & Packaging
+# ==============================================================================
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ==============================================================================
+# Packaging & Kaggle Upload Bundles
+# ==============================================================================
+halo-src.zip
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+# Keep reference results archive if tracked
+!out/halo_results.zip
+
+# ==============================================================================
+# Raw Data & Datasets (IEEE-CIS Fraud Detection, PaySim, etc.)
+# ==============================================================================
+data/
+*.parquet
+*.feather
+*.h5
+*.hdf5
+
+# ==============================================================================
+# Model Checkpoints & Large Pickles (e.g. prepared_ieee_all.pkl > 1GB)
+# ==============================================================================
+checkpoints/
+out/checkpoints/*
+!out/checkpoints/prepared_synth_all.pkl
+*.pkl
+!out/checkpoints/prepared_synth_all.pkl
+*.pickle
+*.joblib
+*.model
+*.pt
+*.pth
+*.bin
+
+# ==============================================================================
+# Jupyter Notebooks
+# ==============================================================================
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# ==============================================================================
+# Logs & Diagnostic Outputs
+# ==============================================================================
+*.log
+!out/smoke3.log
+
+# ==============================================================================
+# Secrets, Credentials & Environment Configs
+# ==============================================================================
+.env
+.env.*
+kaggle.json
+.kaggle/
+*.pem
+*.key
+
+# ==============================================================================
+# Testing, Coverage & Type-Checking Caches
+# ==============================================================================
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# ==============================================================================
+# Operating System & Editor Files
+# ==============================================================================
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux / Vim / Emacs
+*~
+*.swp
+*.swo
+
+# IDEs (VS Code, JetBrains)
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace

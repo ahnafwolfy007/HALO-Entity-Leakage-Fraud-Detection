@@ -22,21 +22,83 @@ BOOT = """\
 #   3. For stages after NB-1: the previous stage's output dataset
 import os, shutil, sys, subprocess, time
 
-SRC = "/kaggle/input/halo-src"
-if os.path.exists(SRC):
+from pathlib import Path
+
+# 1. Locate halo-src regardless of Kaggle mount prefix
+SRC_CANDIDATES = [
+    "/kaggle/input/datasets/wali0754/halo-src",
+    "/kaggle/input/halo-src",
+]
+SRC = next((p for p in SRC_CANDIDATES if os.path.exists(p)), None)
+if SRC is None and os.path.exists("/kaggle/input"):
+    for root, dirs, _ in os.walk("/kaggle/input"):
+        if "halo" in dirs and os.path.exists(os.path.join(root, "halo", "__init__.py")):
+            SRC = root
+            break
+
+if SRC and os.path.exists(SRC):
     if os.path.exists("/kaggle/working/halo"):
         shutil.rmtree("/kaggle/working/halo")
     shutil.copytree(os.path.join(SRC, "halo"), "/kaggle/working/halo")
 sys.path.insert(0, "/kaggle/working")
 
-# Carry forward checkpoints and results from the previous stage, if one is attached.
-for prev in sorted(p for p in os.listdir("/kaggle/input") if p.startswith("halo-stage")):
-    for sub in ("checkpoints", "results", "figures"):
-        s = f"/kaggle/input/{prev}/{sub}"
-        if os.path.isdir(s):
-            os.makedirs(f"/kaggle/working/{sub}", exist_ok=True)
-            for f in os.listdir(s):
-                shutil.copy2(os.path.join(s, f), f"/kaggle/working/{sub}/{f}")
+# 2. Locate IEEE-CIS competition data
+IEEE_CANDIDATES = [
+    "/kaggle/input/competitions/ieee-fraud-detection",
+    "/kaggle/input/ieee-fraud-detection",
+]
+IEEE_DIR = next((p for p in IEEE_CANDIDATES if os.path.exists(p)), None)
+if IEEE_DIR is None and os.path.exists("/kaggle/input"):
+    for root, dirs, files in os.walk("/kaggle/input"):
+        if "train_transaction.csv" in files:
+            IEEE_DIR = root
+            break
+
+if IEEE_DIR:
+    try:
+        import halo.config as _cfg
+        _cfg.IEEE_DIR = Path(IEEE_DIR)
+        print(f"Using IEEE_DIR: {_cfg.IEEE_DIR}")
+    except Exception as e:
+        pass
+
+# 3. Carry forward checkpoints, results, and figures from any previous halo-stage
+if os.path.exists("/kaggle/input"):
+    copied_count = 0
+    for root, dirs, files in os.walk("/kaggle/input"):
+        base = os.path.basename(root)
+        if base in ("checkpoints", "results", "figures") and "halo-stage" in root.lower():
+            dest = os.path.join("/kaggle/working", base)
+            os.makedirs(dest, exist_ok=True)
+            for f in files:
+                shutil.copy2(os.path.join(root, f), os.path.join(dest, f))
+                copied_count += 1
+    if copied_count > 0:
+        print(f"Carried forward {copied_count} files from previous stages.")
+
+# 4. Locate PaySim dataset (for NB-7)
+PAYSIM_CANDIDATES = [
+    "/kaggle/input/datasets/ealaxi/paysim1/PS_20174392719_1491204439457_log.csv",
+    "/kaggle/input/paysim1/PS_20174392719_1491204439457_log.csv",
+    "/kaggle/input/competitions/paysim1/PS_20174392719_1491204439457_log.csv",
+]
+PAYSIM_CSV = next((p for p in PAYSIM_CANDIDATES if os.path.exists(p)), None)
+if PAYSIM_CSV is None and os.path.exists("/kaggle/input"):
+    for root, dirs, files in os.walk("/kaggle/input"):
+        for f in files:
+            if f.startswith("PS_") and f.endswith(".csv"):
+                PAYSIM_CSV = os.path.join(root, f)
+                break
+        if PAYSIM_CSV:
+            break
+
+if PAYSIM_CSV:
+    try:
+        import halo.config as _cfg
+        _cfg.PAYSIM_CSV = Path(PAYSIM_CSV)
+        print(f"Using PAYSIM_CSV: {_cfg.PAYSIM_CSV}")
+    except Exception as e:
+        pass
 
 from halo.io import environment_manifest
 env = environment_manifest()

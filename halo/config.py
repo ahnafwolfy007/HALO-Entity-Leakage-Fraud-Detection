@@ -21,8 +21,30 @@ ON_KAGGLE = Path("/kaggle/input").exists()
 if ON_KAGGLE:
     INPUT_DIR = Path("/kaggle/input")
     WORK_DIR = Path("/kaggle/working")
-    IEEE_DIR = INPUT_DIR / "ieee-fraud-detection"
-    PAYSIM_CSV = INPUT_DIR / "paysim1" / "PS_20174392719_1491204439457_log.csv"
+    
+    _ieee_candidates = [
+        INPUT_DIR / "competitions" / "ieee-fraud-detection",
+        INPUT_DIR / "ieee-fraud-detection",
+    ]
+    IEEE_DIR = next((p for p in _ieee_candidates if (p / "train_transaction.csv").exists()), _ieee_candidates[0])
+    if not (IEEE_DIR / "train_transaction.csv").exists():
+        for _root, _dirs, _files in os.walk(str(INPUT_DIR)):
+            if "train_transaction.csv" in _files:
+                IEEE_DIR = Path(_root)
+                break
+
+    _paysim_candidates = [
+        INPUT_DIR / "paysim1" / "PS_20174392719_1491204439457_log.csv",
+        INPUT_DIR / "datasets" / "ealaxi" / "paysim1" / "PS_20174392719_1491204439457_log.csv",
+        INPUT_DIR / "competitions" / "paysim1" / "PS_20174392719_1491204439457_log.csv",
+    ]
+    PAYSIM_CSV = next((p for p in _paysim_candidates if p.exists()), _paysim_candidates[0])
+    if not PAYSIM_CSV.exists():
+        for _root, _dirs, _files in os.walk(str(INPUT_DIR)):
+            for _f in _files:
+                if _f.startswith("PS_") and _f.endswith(".csv"):
+                    PAYSIM_CSV = Path(_root) / _f
+                    break
 else:
     _here = Path(__file__).resolve().parent.parent
     INPUT_DIR = _here / "data"
