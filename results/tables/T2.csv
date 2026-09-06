@@ -1,0 +1,4 @@
+n_rows,n_entities,entity_size_mean,entity_size_median,entity_size_p95,entity_size_max,singleton_entity_share,fraud_rate,entity_label_purity,n_positives,n_index_events_inferred,propagated_positive_share,fraud_entity_share,c_monotonicity_violation_rate,c_columns_checked,c_steps_compared,er_pair_precision,er_pair_recall,er_pair_f1,n_index_events_true,uid_variant,conflict_rejects,score_rejects,left_truncated_entities
+2485,500,4.97,5.0,9.0,13,0.014,0.02937625754527163,0.994,73,18,0.7534246575342466,0.036,0.0,14,27790,1.0,1.0,1.0,18,loose,0,0,15
+2485,500,4.97,5.0,9.0,13,0.014,0.02937625754527163,0.994,73,18,0.7534246575342466,0.036,0.0,14,27790,1.0,1.0,1.0,18,medium,0,0,15
+2485,500,4.97,5.0,9.0,13,0.014,0.02937625754527163,0.994,73,18,0.7534246575342466,0.036,0.0,14,27790,1.0,1.0,1.0,18,strict,0,0,15

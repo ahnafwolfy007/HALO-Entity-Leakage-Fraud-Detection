@@ -1,0 +1,2 @@
+auprc_monotone,auprc_unconstrained,monotonicity_price_auprc,monotonicity_price_relative,n_monotone_features,monotone_raw_violations,monotone_max_violation,monotone_features_within_tolerance,monotone_features_checked,reason_code_coverage,n_alerts_examined,n_alerts_covered,median_relative_change
+0.014715659403649235,0.020243366898292293,0.005527707494643059,0.27306265417287723,19,0,0.0,17,17,1.0,5,5,0.3491323809775225

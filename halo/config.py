@@ -48,12 +48,12 @@ if ON_KAGGLE:
 else:
     _here = Path(__file__).resolve().parent.parent
     INPUT_DIR = _here / "data"
-    WORK_DIR = _here / "out"
+    WORK_DIR = _here / "results"
     IEEE_DIR = INPUT_DIR / "ieee-fraud-detection"
     PAYSIM_CSV = INPUT_DIR / "paysim" / "paysim.csv"
 
 CKPT_DIR = WORK_DIR / "checkpoints"
-RESULTS_DIR = WORK_DIR / "results"
+RESULTS_DIR = WORK_DIR / "tables" if (WORK_DIR / "tables").exists() else (WORK_DIR / "results")
 FIG_DIR = WORK_DIR / "figures"
 
 for _d in (WORK_DIR, CKPT_DIR, RESULTS_DIR, FIG_DIR):

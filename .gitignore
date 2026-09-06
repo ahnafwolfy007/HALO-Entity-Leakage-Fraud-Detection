@@ -29,8 +29,8 @@ halo-src.zip
 *.tgz
 *.rar
 *.7z
-# Keep reference results archive if tracked
-!out/halo_results.zip
+# Keep official complete benchmark release archive
+!results/halo_results.zip
 
 # ==============================================================================
 # Raw Data & Datasets (IEEE-CIS Fraud Detection, PaySim, etc.)
@@ -44,11 +44,11 @@ data/
 # ==============================================================================
 # Model Checkpoints & Large Pickles (e.g. prepared_ieee_all.pkl > 1GB)
 # ==============================================================================
-checkpoints/
-out/checkpoints/*
-!out/checkpoints/prepared_synth_all.pkl
+checkpoints/*
+results/checkpoints/*
+!checkpoints/*.json
+!results/checkpoints/*.json
 *.pkl
-!out/checkpoints/prepared_synth_all.pkl
 *.pickle
 *.joblib
 *.model
@@ -66,7 +66,6 @@ out/checkpoints/*
 # Logs & Diagnostic Outputs
 # ==============================================================================
 *.log
-!out/smoke3.log
 
 # ==============================================================================
 # Secrets, Credentials & Environment Configs

@@ -1,0 +1,54 @@
+HALO -- Entity-Leakage Fraud Detection
+============================================================
+
+config_hash : 2df8a5b4a01d
+seeds       : [0, 1, 2, 3, 4]
+headline_delta_days : 30
+
+Contents
+--------
+halo/       pipeline source (importable package)
+results/    every result table as CSV, with .meta.json sidecars
+figures/    generated figures
+notebooks/  Kaggle stage notebooks
+docs/       run guide, adversarial review, why-it-works, handoff prompt
+HALO_report.html   the assembled report -- open this first
+
+Result tables present (21):
+  - F1.csv
+  - F3.csv
+  - L5.csv
+  - L5_evidence.csv
+  - L5_raw.csv
+  - T1.csv
+  - T1_raw.csv
+  - T1b.csv
+  - T1b_attribution.csv
+  - T1b_raw.csv
+  - T2.csv
+  - T3.csv
+  - T3_raw.csv
+  - T4.csv
+  - T4_raw.csv
+  - T5.csv
+  - T5_raw.csv
+  - T6.csv
+  - T6_monotone_verification.csv
+  - T6_roar.csv
+  - T7.csv
+
+Figures present (9):
+  - F1_shap_mass_migration.png
+  - F2_leakage_ladder_collapse.png
+  - F3_regime_drift_vs_auprc_decay.png
+  - F4_main_benchmark_comparison.png
+  - F5_architectural_ablation.png
+  - F6_latency_sensitivity_sweep.png
+  - F7_throughput_cost_frontier.png
+  - F8_paysim_generator_collapse.png
+  - F9_roar_faithfulness_curve.png
+
+Integrity note
+--------------
+Every value in results/ was produced by code in halo/. Stages that did not run
+are absent here and are marked NOT RUN in the report, never estimated.

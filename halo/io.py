@@ -82,8 +82,18 @@ def save_table(df: pd.DataFrame, table_id: str, title: str = "") -> Path:
 
 
 def load_table(table_id: str) -> pd.DataFrame | None:
-    path = RESULTS_DIR / f"{table_id}.csv"
-    return pd.read_csv(path) if path.exists() else None
+    candidates = [
+        RESULTS_DIR / f"{table_id}.csv",
+        RESULTS_DIR / "tables" / f"{table_id}.csv",
+        RESULTS_DIR / "results" / f"{table_id}.csv",
+        Path.cwd() / "results" / "tables" / f"{table_id}.csv",
+        Path.cwd() / "results" / "results" / f"{table_id}.csv",
+        Path.cwd() / "results" / f"{table_id}.csv",
+    ]
+    for p in candidates:
+        if p.exists():
+            return pd.read_csv(p)
+    return None
 
 
 # --------------------------------------------------------------------------------------

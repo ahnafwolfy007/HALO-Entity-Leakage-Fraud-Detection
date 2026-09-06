@@ -19,27 +19,63 @@ BOOT = """\
 # Attach these datasets to this notebook before running (right panel -> Add Data):
 #   1. Competition: "ieee-fraud-detection"      (accept the rules first)
 #   2. Your source dataset: "halo-src"           (the halo/ package, see RUN_GUIDE.md)
-#   3. For stages after NB-1: the previous stage's output dataset
+#   3. For stages after NB-1: the previous stage's output dataset (e.g. halo-stage8)
 import os, shutil, sys, subprocess, time
 
 from pathlib import Path
 
-# 1. Locate halo-src regardless of Kaggle mount prefix
-SRC_CANDIDATES = [
-    "/kaggle/input/datasets/wali0754/halo-src",
-    "/kaggle/input/halo-src",
-]
-SRC = next((p for p in SRC_CANDIDATES if os.path.exists(p)), None)
-if SRC is None and os.path.exists("/kaggle/input"):
-    for root, dirs, _ in os.walk("/kaggle/input"):
-        if "halo" in dirs and os.path.exists(os.path.join(root, "halo", "__init__.py")):
-            SRC = root
+# 1. Locate and copy halo package regardless of Kaggle mount structure or folder naming
+if os.path.exists("/kaggle/working/halo"):
+    shutil.rmtree("/kaggle/working/halo")
+
+HALO_FOUND = False
+candidates = []
+if os.path.exists("/kaggle/input"):
+    for root, dirs, files in os.walk("/kaggle/input"):
+        if "working" in root or "__pycache__" in root:
+            continue
+        if "cli.py" in files and "config.py" in files:
+            score = 0
+            if "figures.py" in files:
+                score += 20  # Prioritize latest code containing figures.py
+            if "__init__.py" in files:
+                score += 5
+            if "halo" in os.path.basename(root).lower():
+                score += 2
+            candidates.append((score, root))
+
+if candidates:
+    candidates.sort(key=lambda x: x[0], reverse=True)
+    best_src = candidates[0][1]
+    shutil.copytree(best_src, "/kaggle/working/halo", dirs_exist_ok=True)
+    init_f = os.path.join("/kaggle/working/halo", "__init__.py")
+    if not os.path.exists(init_f):
+        with open(init_f, "w") as f:
+            f.write("# HALO package root\n")
+    HALO_FOUND = True
+    print(f"Loaded HALO package from: {best_src}")
+else:
+    # Also check for any zip archives
+    for root, dirs, files in os.walk("/kaggle/input"):
+        for f in files:
+            if f.endswith(".zip") and ("halo" in f.lower() or "src" in f.lower()):
+                import zipfile
+                zf_path = os.path.join(root, f)
+                try:
+                    with zipfile.ZipFile(zf_path, "r") as zf:
+                        zf.extractall("/kaggle/working")
+                    if os.path.exists("/kaggle/working/halo"):
+                        HALO_FOUND = True
+                        print(f"Extracted halo from {zf_path}")
+                        break
+                except Exception:
+                    pass
+        if HALO_FOUND:
             break
 
-if SRC and os.path.exists(SRC):
-    if os.path.exists("/kaggle/working/halo"):
-        shutil.rmtree("/kaggle/working/halo")
-    shutil.copytree(os.path.join(SRC, "halo"), "/kaggle/working/halo")
+if not HALO_FOUND:
+    raise FileNotFoundError("Could not find HALO package files under /kaggle/input! Please attach 'halo-src' dataset.")
+
 sys.path.insert(0, "/kaggle/working")
 
 # 2. Locate IEEE-CIS competition data
@@ -65,9 +101,22 @@ if IEEE_DIR:
 # 3. Carry forward checkpoints, results, and figures from any previous halo-stage
 if os.path.exists("/kaggle/input"):
     copied_count = 0
+    # First extract any bundled results zip from previous stages if present
+    for root, dirs, files in os.walk("/kaggle/input"):
+        for f in files:
+            if f.endswith(".zip") and ("halo_results" in f.lower() or "results" in f.lower()):
+                import zipfile
+                zf_path = os.path.join(root, f)
+                try:
+                    with zipfile.ZipFile(zf_path, "r") as zf:
+                        zf.extractall("/kaggle/working")
+                    print(f"Unpacked previous stage bundle: {f}")
+                except Exception:
+                    pass
+
     for root, dirs, files in os.walk("/kaggle/input"):
         base = os.path.basename(root)
-        if base in ("checkpoints", "results", "figures") and "halo-stage" in root.lower():
+        if base in ("checkpoints", "results", "figures") and "working" not in root:
             dest = os.path.join("/kaggle/working", base)
             os.makedirs(dest, exist_ok=True)
             for f in files:
@@ -152,6 +201,26 @@ If it is low, you learn that now, with time to pivot.
 
 **Publish this notebook's output as a Kaggle Dataset named `halo-stage1`.**
 """, ['from halo.cli import main\nmain(["run-entities"])\n']),
+
+    ("NB1b_size_control", "NB-1b — T1b, the training-size control", """
+Disentangles entity leakage from training sample reduction (adversarial review item 13).
+Compares rung2_full vs rung2_size_matched vs rung3_entity_disjoint across 5 seeds.
+
+Attach datasets:
+  1. Competition: `ieee-fraud-detection`
+  2. Source: `halo-src`
+  3. Previous stage: `halo-stage8` (or `halo-stage7`)
+
+When this finishes, it automatically runs `report` to re-compile the report with 100% of tables complete!
+""", ['from halo.cli import main\nmain(["run-size-control", "--seeds", "0", "1", "2", "3", "4"])\nmain(["report"])\n',
+      '''# Confirm the bundle exists and show where to click.
+import os
+for f in sorted(os.listdir("/kaggle/working")):
+    p = os.path.join("/kaggle/working", f)
+    if os.path.isfile(p):
+        print(f"{os.path.getsize(p)/1e6:8.2f} MB  {f}")
+print("\\nDownload: right-hand panel -> Output -> halo_results.zip -> download icon.")
+''']),
 
     ("NB2_ladder", "NB-2 — T1, the leakage ladder", """
 The headline table. Each rung closes one more leakage channel with the model held

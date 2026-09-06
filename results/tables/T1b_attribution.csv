@@ -1,0 +1,2 @@
+total_drop_auprc,attributable_to_training_size,attributable_to_entity_leakage,leakage_share_of_drop
+0.16212279027030585,0.051490470446766023,0.11063231982353983,0.6823983206746169

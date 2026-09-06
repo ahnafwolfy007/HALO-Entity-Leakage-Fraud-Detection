@@ -14,16 +14,21 @@ from .config import CFG, FIG_DIR, RESULTS_DIR, WORK_DIR
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DOC_FILES = ["RUN_GUIDE.md", "ADVERSARIAL_REVIEW.md", "WHY_IT_WORKS.md",
-             "HANDOFF_PROMPT.md", "README.md"]
+             "HANDOFF_PROMPT.md", "README.md", "EXECUTION_LOG.md"]
 
 
 def write_docs() -> list[Path]:
     """Copy the written deliverables next to the results so the ZIP is self-contained."""
+    if WORK_DIR == REPO_ROOT or WORK_DIR.name == "results":
+        return []
     copied = []
+    docs_dir = WORK_DIR / "docs"
+    docs_dir.mkdir(parents=True, exist_ok=True)
     for name in DOC_FILES:
-        src = REPO_ROOT / name
-        if src.exists():
-            dst = WORK_DIR / name
+        candidates = [REPO_ROOT / "docs" / name, REPO_ROOT / name, WORK_DIR / "docs" / name, WORK_DIR / name]
+        src = next((p for p in candidates if p.exists()), None)
+        if src is not None:
+            dst = WORK_DIR / name if name == "README.md" else docs_dir / name
             shutil.copy2(src, dst)
             copied.append(dst)
     return copied
@@ -51,9 +56,11 @@ def build_zip(name: str = "halo_results.zip", max_mb: float = 400.0) -> Path:
             if p.exists():
                 zf.write(p, f)
         for d in DOC_FILES:
-            p = WORK_DIR / d
-            if p.exists():
-                zf.write(p, f"docs/{d}")
+            candidates = [REPO_ROOT / "docs" / d, REPO_ROOT / d, WORK_DIR / "docs" / d, WORK_DIR / d]
+            p = next((c for c in candidates if c.exists()), None)
+            if p is not None:
+                arc_name = d if d == "README.md" else f"docs/{d}"
+                zf.write(p, arc_name)
         nb = REPO_ROOT / "notebooks"
         if nb.exists():
             _add_tree(zf, nb, "notebooks", ("*.py", "*.ipynb", "*.md"))

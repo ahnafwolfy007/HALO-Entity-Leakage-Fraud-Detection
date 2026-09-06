@@ -1,0 +1,19 @@
+{
+  "python": "3.12.13",
+  "platform": "Linux-6.12.90+-x86_64-with-glibc2.35",
+  "cpu_count": 4,
+  "captured_at": "2026-09-06 00:16:33",
+  "ram_total_gb": 33.66,
+  "ram_available_gb": 30.19,
+  "disk_free_gb": 19.81,
+  "v_numpy": "2.0.2",
+  "v_pandas": "2.3.3",
+  "v_sklearn": "1.6.1",
+  "v_scipy": "1.16.3",
+  "v_lightgbm": "4.6.0",
+  "v_xgboost": "3.2.0",
+  "v_catboost": "1.2.10",
+  "v_shap": "0.51.0",
+  "v_matplotlib": "3.10.0",
+  "parquet_available": true
+}
