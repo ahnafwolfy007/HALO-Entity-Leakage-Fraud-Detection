@@ -119,6 +119,10 @@ data/
 | elliptic | kaggle.com/datasets/ellipticco/elliptic-data-set | 203,769 |
 | tabformer | github.com/IBM/TabFormer | 24,386,900 |
 
+[DATASETS.md](DATASETS.md) has the full entry for each one: exact filenames,
+`kaggle` download commands, dataset variants, and the caveats that constrain
+what may be claimed from each.
+
 Check what the code can actually see:
 
 ```bash
