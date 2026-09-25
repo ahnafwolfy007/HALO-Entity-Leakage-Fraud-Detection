@@ -17,6 +17,7 @@ import numpy as np
 import pandas as pd
 
 from .config import CKPT_DIR, RESULTS_DIR
+from .resume import atomic_save_df, atomic_write_bytes, atomic_write_text, safe_load_df
 
 try:  # pragma: no cover - environment dependent
     import pyarrow  # noqa: F401
@@ -30,20 +31,24 @@ except ImportError:
 # --------------------------------------------------------------------------------------
 
 def save_df(df: pd.DataFrame, name: str) -> Path:
-    if _HAVE_PARQUET:
-        path = CKPT_DIR / f"{name}.parquet"
-        df.to_parquet(path, index=False)
-    else:
-        path = CKPT_DIR / f"{name}.pkl"
-        df.to_pickle(path)
-    return path
+    """Crash-safe checkpoint write (tmp -> fsync -> atomic rename).
+
+    Writing straight to the target path is unsafe where power can be lost
+    mid-write: it leaves a truncated file that ``has_ckpt`` then reports as
+    valid forever. See ``resume.atomic_save_df``.
+    """
+    ext = ".parquet" if _HAVE_PARQUET else ".pkl"
+    return atomic_save_df(df, CKPT_DIR / f"{name}{ext}")
 
 
 def load_df(name: str) -> pd.DataFrame | None:
-    for ext, reader in ((".parquet", pd.read_parquet), (".pkl", pd.read_pickle)):
+    """Load a checkpoint. An unreadable file is quarantined and treated as absent."""
+    for ext in (".parquet", ".pkl"):
         path = CKPT_DIR / f"{name}{ext}"
         if path.exists():
-            return reader(path)
+            df = safe_load_df(path)
+            if df is not None:
+                return df
     return None
 
 
@@ -52,10 +57,7 @@ def has_ckpt(name: str) -> bool:
 
 
 def save_obj(obj, name: str) -> Path:
-    path = CKPT_DIR / f"{name}.pkl"
-    with open(path, "wb") as fh:
-        pickle.dump(obj, fh)
-    return path
+    return atomic_write_bytes(CKPT_DIR / f"{name}.pkl", pickle.dumps(obj))
 
 
 def load_obj(name: str):
@@ -73,11 +75,10 @@ def load_obj(name: str):
 def save_table(df: pd.DataFrame, table_id: str, title: str = "") -> Path:
     """Persist a result table as CSV plus a sidecar of metadata."""
     path = RESULTS_DIR / f"{table_id}.csv"
-    df.to_csv(path, index=False)
+    atomic_write_text(path, df.to_csv(index=False))
     meta = {"table_id": table_id, "title": title,
             "rows": int(len(df)), "written_at": time.strftime("%Y-%m-%d %H:%M:%S")}
-    with open(RESULTS_DIR / f"{table_id}.meta.json", "w") as fh:
-        json.dump(meta, fh, indent=2)
+    atomic_write_text(RESULTS_DIR / f"{table_id}.meta.json", json.dumps(meta, indent=2))
     return path
 
 
